@@ -3,7 +3,7 @@ const express = require('express');
 // my express app
 const app = express()
 
-//template engine
+// template/views engine
 app.set('view engine', 'ejs')
 
 // listen
