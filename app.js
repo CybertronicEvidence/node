@@ -9,6 +9,9 @@ app.set('view engine', 'ejs')
 // listen
 app.listen(5000);
 
+// static file
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
     // res.sendFile('./display/index.html', { root: __dirname })
     const blogs = [
