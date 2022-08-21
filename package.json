@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/CybertronicEvidence/node#readme",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "lodash": "^4.17.21",

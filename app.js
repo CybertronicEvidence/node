@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // my express app
 const app = express()
@@ -8,8 +11,7 @@ const app = express()
 app.set('view engine', 'ejs')
 
 // connect to database
-const dB = 'mongodb+srv://Evidence:ibukun357Evidence__()@crash-node.sfbke2u.mongodb.net/blog-spot-node?retryWrites=true&w=majority';
-mongoose.connect(dB)
+mongoose.connect(process.env.MONGO_URL)
     .then((result) => app.listen(5000))
     .catch((err) => console.log(err))
 
