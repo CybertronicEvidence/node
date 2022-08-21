@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 // my express app
 const app = express()
@@ -6,8 +7,14 @@ const app = express()
 // template/views engine
 app.set('view engine', 'ejs')
 
-// listen
-app.listen(5000);
+// connect to database
+const dB = 'mongodb+srv://Evidence:ibukun357Evidence__()@crash-node.sfbke2u.mongodb.net/blog-spot-node?retryWrites=true&w=majority';
+mongoose.connect(dB)
+    .then((result) => app.listen(5000))
+    .catch((err) => console.log(err))
+
+// // listen
+// app.listen(5000);
 
 // static file
 app.use(express.static('public'));
