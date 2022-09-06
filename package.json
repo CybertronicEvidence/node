@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +21,12 @@
   },
   "homepage": "https://github.com/CybertronicEvidence/node#readme",
   "dependencies": {
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.2",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "lodash": "^4.17.21",
-    "mongoose": "^6.5.2",
+    "mongoose": "^6.5.4",
     "nodemon": "^2.0.19"
   },
-  "description": ""
+  "description": "A Crash-course to learning node.js"
 }

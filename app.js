@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const Blog = require('./models/blogs')
+const Blog = require('./models/blogs');
+const { render } = require('express/lib/response');
+const { response } = require('express');
 
 dotenv.config();
 
@@ -12,7 +14,7 @@ const app = express()
 app.set('view engine', 'ejs')
 
 // connect to database
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => app.listen(5000))
     .catch((err) => console.log(err))
 
@@ -21,6 +23,11 @@ mongoose.connect(process.env.MONGO_URL)
 
 // static file
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }))
+// app.use((req, res, next) => {
+//     res.locals.path = req.path;
+//     next();
+//   });
 
 // mongoose and mongo sandbox route
 // app.get('/add-blog', (req, res) => {
@@ -71,6 +78,41 @@ app.get('/blogs', (req, res) => {
             res.render('index', { title: 'All blogs', blogs: result})
         });
 })
+
+app.post('/blogs', (req, res) => {
+    const blog = new Blog(req.body)
+
+    blog.save()
+        .then(result => {
+            res.redirect('/blogs')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    // if( !mongoose.Types.ObjectId.isValid(id) ) return false;
+    Blog.findById(id)
+        .then(result => {
+            res.render('details', { blog: result, title: 'Blog details' })
+        })
+        .catch(err => { 
+            console.log(err)
+        })
+})
+
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json({ redirect: '/blogs' }) 
+        })
+        .catch(err => console.log(err))
+})
+
 app.get('/blogs/create', (req, res) => {
     res.render('create', { title: 'Create a new blog'})
 });
